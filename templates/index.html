@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %} OpenAirspace Tools {% endblock %}
+
+
+{% block content %}
+<h1>Welcolme to Airspace tools</h1>
+{% if table %}
+    {% if toPrint %}
+        <form action="{{ url_for('export') }}" method="post" enctype="multipart/form-data">
+            <input class="form-control" type="hidden" name="airspace" value="{{ data }}" required>
+            <input class="form-control btn-success" type="submit" name="submit" value="Export new values!">
+        </form>
+
+    {% else %}
+        <form action="{{ url_for('convert') }}" method="post" enctype="multipart/form-data">
+            <input class="form-control" type="hidden" name="airspace" value="{{ data }}" required>
+            <label for="unit">Choose your favorite unit :</label>
+            <select class="for-control" name="unit">
+                <option value="meter">Meter</option>
+                <option value="feet">Feet</option>
+                <option value="fake">Fake feet for Tim ;-)</option>
+            </select>
+            <label for="pressure">Which pressure suits you best to convert FL ?</label>
+            <input name="pressure" type="number" min="1006" max="1020" value="1013">
+            <input class="form-control" type="submit" name="submit" value="Convert !">
+        </form>
+    {% endif %}
+    {{ table | safe }}
+{% else %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <form action="{{ url_for('get_airspace_file') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="airspace">Airspace file :</label>
+                    <input class="form-control" type="file" name="airspace" required>
+                    <input class="form-control" type="submit" name="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

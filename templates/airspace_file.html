@@ -1,0 +1,8 @@
+{% for zone in zones %}
+AC {{ zone['class'] }}
+AN {{ zone['name'] }}
+AH {{ zone['new_ceiling'] }}
+AL {{ zone['new_floor'] }}
+{%- for coord in zone['coords'] %}
+{{ coord }}{% endfor %}
+{% endfor %}
